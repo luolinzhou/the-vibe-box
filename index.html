@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Karaoke App</title>
+    <script>
+        // Charger une playlist
+        async function loadPlaylist() {
+            const phone = document.getElementById('phone').value;
+            const response = await fetch(`http://localhost:5000/playlists?phone=${phone}`);
+            const playlists = await response.json();
+            console.log(playlists);
+        }
+
+        // Ajouter une chanson (exemple simplifié)
+        async function addSong() {
+            await fetch('http://localhost:5000/add_song', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    phone: "0123456789",
+                    song_id: "dQw4w9WgXcQ",  // ID YouTube
+                    title: "Never Gonna Give You Up",
+                    settings: { key: "+2", rap: true }  // Customisation
+                })
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Mon Karaoké</h1>
+    <input type="text" id="phone" placeholder="Votre numéro">
+    <button onclick="loadPlaylist()">Charger ma playlist</button>
+    <button onclick="addSong()">Ajouter une chanson (test)</button>
+
+    <h2>Ajouter une chanson</h2>
+    <input type="text" id="new_phone" placeholder="Votre numéro">
+    <input type="text" id="new_song_id" placeholder="ID YouTube">
+    <input type="text" id="new_title" placeholder="Titre">
+    <button onclick="addNewSong()">Ajouter</button>
+
+    <script>
+        async function addNewSong() {
+            const phone = document.getElementById('new_phone').value;
+            const songId = document.getElementById('new_song_id').value;
+            const title = document.getElementById('new_title').value;
+            
+            await fetch('http://localhost:5000/add_song', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    phone: phone,
+                    song_id: songId,
+                    title: title,
+                    settings: { key: "0", rap: false } // Valeurs par défaut
+                })
+            });
+            alert("Chanson ajoutée avec succès!");
+        }
+    </script>
+
+</body>
+</html>
+
+<audio id="player" controls></audio>
+<script>
+    // Jouer une piste YouTube (simplifié)
+    function playYouTube(videoId) {
+        const player = document.getElementById('player');
+        // Note: Pour une vraie app, utiliser youtube-dl ou yt-dlp côté serveur
+        player.src = `https://www.youtube.com/watch?v=${videoId}`;
+    }
+</script>

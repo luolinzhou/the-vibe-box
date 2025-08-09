@@ -1,0 +1,42 @@
+<!-- templates/admin.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Karaoké</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Gestion des Utilisateurs</h1>
+    
+    <h2>Utilisateurs</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Playlists</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Téléphone</th>
+            <th>Song ID</th>
+            <th>Titre</th>
+            <th>Paramètres</th>
+        </tr>
+        {% for playlist in playlists %}
+        <tr>
+            <td>{{ playlist[0] }}</td>
+            <td>{{ playlist[1] }}</td>
+            <td>{{ playlist[2] }}</td>
+            <td>{{ playlist[3] }}</td>
+            <td>{{ playlist[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
